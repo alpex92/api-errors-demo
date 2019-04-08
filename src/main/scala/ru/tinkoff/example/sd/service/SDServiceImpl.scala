@@ -1,6 +1,5 @@
 package ru.tinkoff.example.sd.service
 
-import java.time.Instant
 import scala.language.higherKinds
 
 import cats.data.{EitherT, NonEmptyList, Validated, ValidatedNel}

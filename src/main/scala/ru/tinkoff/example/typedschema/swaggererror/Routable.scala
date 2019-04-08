@@ -27,6 +27,11 @@ object Routable extends FailFastCirceSupport {
     }
   }
 
+  implicit def mkTypedRoutable[F[_], R]
+  (implicit mkRoute: R => Route, fToFuture: F ~> Future): TypedSchemaRoutable[F[R], R] = { res =>
+    Directives.onSuccess(fToFuture(res))(mkRoute)
+  }
+
   private[Routable] object ErrorMappingPoly extends Poly1 {
     implicit def default[T: ToApiErrorWithCode] = at[T](errorToRoute)
   }

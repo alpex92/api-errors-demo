@@ -13,23 +13,22 @@ import ru.tinkoff.tschema.syntax._
 package object sd {
 
   // format: off
-  type AppListResponseError = AuthorizationNeeded :+: CNil
-  type AppListResponse = Either[AppListResponseError, Seq[ApplicationPreview]]
+  type AppListResponse = Seq[ApplicationPreview]
 
-  type AppDetailsResponseError = AuthorizationNeeded :+: AppNotFound :+: CNil
+  type AppDetailsResponseError = AppNotFound :+: CNil
   type AppDetailsResponse = Either[AppDetailsResponseError, Application]
 
-  type CreateAppResponseError = AuthorizationNeeded :+: AppCreateError :+: CNil
+  type CreateAppResponseError = AppCreateError :+: CNil
   type CreateAppResponse = Either[CreateAppResponseError, UUID]
 
-  type UpdateStatusResponseError = AuthorizationNeeded :+: AppNotFound :+: WrongStatusError :+: AppUpdateError :+: CNil
+  type UpdateStatusResponseError = AppNotFound :+: WrongStatusError :+: AppUpdateError :+: CNil
   type UpdateStatusResponse = Either[UpdateStatusResponseError, Unit]
 
   val route = tag('Заявки) :> prefix('api) :> prefix('sd) :> prefix('v1) :> prefix('applications) :> (handleErrors() :> (
     (key('list) :> get.! :> complete[AppListResponse]) ~
-    (key('details) :> capture[UUID]('appId) :> get.! :> complete[AppDetailsResponse]) ~
-    (operation('create) :> post.! :> reqBody[ApplicationCreate] :> complete[CreateAppResponse]) ~
-    (capture[UUID]('appId) :> operation('update) :> post.! :> reqBody[AppStatus] :> complete[UpdateStatusResponse])
+      (key('create) :> post.! :> reqBody[ApplicationCreate] :> complete[CreateAppResponse]) ~
+      (key('details) :> capture[UUID]('appId) :> get.! :> complete[AppDetailsResponse]) ~
+      (capture[UUID]('appId) :> operation('update) :> post.! :> reqBody[AppStatus] :> complete[UpdateStatusResponse])
   ))
   // format: on
 

@@ -19,12 +19,16 @@ object Errors {
     StatusCodes.BadRequest
   )
 
+  implicit val appCreateErrorApiErrorWithCode: ToApiErrorWithCode[AppCreateError] =
+    toApiErrorWithCodeFromSwaggerErrorAndInstanceT { (se, t) =>
+      ApiErrorResponse(s"${se.description}: ${t.issues.toList.mkString(", ")}", se.apiErrorCode)
+    }
+
   implicit val worngStatusError: SwaggerError[WrongStatusError] = SwaggerErrorVal(
     "Неверный статус",
     StatusCodes.BadRequest
   )
 
-  // NOTE: Кастомный обработчик ошибки, возвращает конкретный статус
   implicit val wrongStatusApiErrorWithCode: ToApiErrorWithCode[WrongStatusError] =
     toApiErrorWithCodeFromSwaggerErrorAndInstanceT { (se, t) =>
       ApiErrorResponse(s"${se.description}: '${t.status}'", se.apiErrorCode)
@@ -34,7 +38,4 @@ object Errors {
     "Ошибка обновления заявки",
     StatusCodes.InternalServerError
   )
-
-  implicit val authorizationNeeded: SwaggerError[AuthorizationNeeded] =
-    SwaggerErrorVal("Требуется авторизация", StatusCodes.Unauthorized)
 }

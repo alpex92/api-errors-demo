@@ -14,12 +14,7 @@ import ru.tinkoff.example.sd.service.SDService
 
 class SDHandler[F[_] : Monad](service: SDService[F]) {
 
-  def list: F[AppListResponse] =
-    service
-      .list
-      .map {
-        _.asRight[AppListResponseError]
-      }
+  def list: F[AppListResponse] = service.list
 
   def details(appId: UUID): F[AppDetailsResponse] =
     service

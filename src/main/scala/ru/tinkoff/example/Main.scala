@@ -7,7 +7,6 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import cats.arrow.FunctionK
-import io.getquill.{SnakeCase, SqliteJdbcContext}
 
 import ru.tinkoff.example.sd.access.{AsyncJdbcAppAccess, SyncJdbcAppAccess}
 import ru.tinkoff.example.sd.service.SDServiceImpl
@@ -19,15 +18,13 @@ object Main extends App {
   implicit val system = ActorSystem()
   implicit val mat = ActorMaterializer()
   implicit val generalEx = system.dispatcher
-  implicit val jdbcCtx: SqliteJdbcContext[SnakeCase] = new SqliteJdbcContext(SnakeCase, "ctx")
   implicit val futureF = FunctionK.id[Future]
 
-  val syncDB = new SyncJdbcAppAccess
-  val asyncDB = new AsyncJdbcAppAccess(syncDB)
+  val asyncDB = new AsyncJdbcAppAccess(SyncJdbcAppAccess)
   val service = new SDServiceImpl[Future](asyncDB)
   val module = new SDModule(service)
   val server = new Server(module)
 
-  syncDB.initSchema()
+  SyncJdbcAppAccess.initSchema()
   Http().bindAndHandle(server.routes, "0.0.0.0", 9991)
 }

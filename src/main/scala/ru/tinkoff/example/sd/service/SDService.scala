@@ -1,6 +1,5 @@
 package ru.tinkoff.example.sd.service
 
-import java.time.Instant
 import java.util.UUID
 import scala.language.higherKinds
 
@@ -17,7 +16,6 @@ object SDService {
     case class AppNotFound(id: AppId)
     case class WrongStatusError(status: AppStatus)
     trait AppUpdateError
-    trait AuthorizationNeeded
     case class AppCreateError(issues: NonEmptyList[String])
   }
 

@@ -33,7 +33,7 @@ object Queries {
   }
 }
 
-class SyncJdbcAppAccess extends AppAccess[Id] {
+object SyncJdbcAppAccess extends AppAccess[Id] {
 
   val ctx = SQLiteContext
 

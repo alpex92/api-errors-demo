@@ -20,9 +20,7 @@ object ApplicationCreate
 @derive(swagger)
 case class ApplicationPreview(meta: AppMeta, title: String)
 
-object ApplicationPreview {
-  def fromApp(app: Application) = ApplicationPreview(app.meta, app.title)
-}
+object ApplicationPreview
 
 @JsonCodec
 @derive(swagger)
