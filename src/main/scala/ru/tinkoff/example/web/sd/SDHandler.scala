@@ -1,6 +1,5 @@
 package ru.tinkoff.example.web.sd
 
-import java.time.Instant
 import java.util.UUID
 
 import scala.language.higherKinds
@@ -15,9 +14,9 @@ import ru.tinkoff.example.sd.service.SDService
 
 class SDHandler[F[_] : Monad](service: SDService[F]) {
 
-  def list(from: Instant): F[AppListResponse] =
+  def list: F[AppListResponse] =
     service
-      .list(from)
+      .list
       .map {
         _.asRight[AppListResponseError]
       }

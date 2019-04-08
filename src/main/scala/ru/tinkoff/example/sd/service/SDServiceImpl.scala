@@ -37,7 +37,7 @@ class SDServiceImpl[F[_] : Monad](access: AppAccess[F]) extends SDService[F] {
 
   import SDServiceImpl._
 
-  override def list(from: Instant): F[Seq[ApplicationPreview]] = access.list(from)
+  override def list: F[Seq[ApplicationPreview]] = access.list
 
   override def details(appId: AppId): F[Either[AppDetailsError, Application]] = access
     .details(appId)
@@ -59,7 +59,10 @@ class SDServiceImpl[F[_] : Monad](access: AppAccess[F]) extends SDService[F] {
     )
 
     Apply[V]
-      .map2(titleV, descV)((_, _) => access.create(create))
+      .map2(titleV, descV) { (_, _) =>
+        val app = Application.fromCreate(create)
+        access.create(app).map(_ => app.meta.id)
+      }
       .toEither
       .leftMap(AppCreateError)
       .traverse(identity)

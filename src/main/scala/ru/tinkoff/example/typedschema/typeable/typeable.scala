@@ -24,10 +24,4 @@ package object typeable {
   implicit val instantTypeable: SwaggerTypeable[Instant] = make[Instant](instant)
   implicit val localDateTypeable: SwaggerTypeable[LocalDate] = make[LocalDate](localDate)
   implicit val yearTypeable: SwaggerTypeable[Year] = make[Year](SwaggerPrimitive.integer)
-
-  implicit val instantFromQueryParam: FromQueryParam[Instant] =
-    (param: String) => Try(Instant.parse(param)).toEither.left.map(_.getMessage)
-
-  implicit val yearFromQueryParam: FromQueryParam[Year] =
-    (param: String) => Try(Year.parse(param)).toEither.left.map(_.getMessage)
 }

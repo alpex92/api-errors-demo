@@ -26,7 +26,7 @@ object SDService {
 }
 
 trait SDService[F[_]] {
-  def list(from: Instant): F[Seq[ApplicationPreview]]
+  def list: F[Seq[ApplicationPreview]]
   def details(appId: AppId): F[Either[AppDetailsError, Application]]
   def create(create: ApplicationCreate): F[Either[AppCreateError, UUID]]
   def update(appId: AppId, newStatus: AppStatus): F[Either[StatusUpdateError, Unit]]

@@ -19,15 +19,15 @@ object Errors {
     StatusCodes.BadRequest
   )
 
-  implicit val statusValidationError: SwaggerError[WrongStatusError] = SwaggerErrorVal(
+  implicit val worngStatusError: SwaggerError[WrongStatusError] = SwaggerErrorVal(
     "Неверный статус",
     StatusCodes.BadRequest
   )
 
   // NOTE: Кастомный обработчик ошибки, возвращает конкретный статус
-  implicit val badDocumentTypeToApiErrorWithCode: ToApiErrorWithCode[WrongStatusError] =
+  implicit val wrongStatusApiErrorWithCode: ToApiErrorWithCode[WrongStatusError] =
     toApiErrorWithCodeFromSwaggerErrorAndInstanceT { (se, t) =>
-      ApiErrorResponse(s"${se.description}: ${t.status}", se.apiErrorCode)
+      ApiErrorResponse(s"${se.description}: '${t.status}'", se.apiErrorCode)
     }
 
   implicit val appUpdateError: SwaggerError[AppUpdateError] = SwaggerErrorVal(
