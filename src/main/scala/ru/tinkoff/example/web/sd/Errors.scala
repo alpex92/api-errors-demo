@@ -2,7 +2,7 @@ package ru.tinkoff.example.web.sd
 
 import akka.http.scaladsl.model.StatusCodes
 
-import ru.tinkoff.example.sd.app.SDService.errors._
+import ru.tinkoff.example.sd.service.SDService.errors._
 import ru.tinkoff.example.typedschema.swaggererror._
 
 import ru.tinkoff.example.typedschema.swaggererror.ToApiErrorWithCode._

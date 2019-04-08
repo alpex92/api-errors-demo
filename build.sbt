@@ -15,7 +15,9 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-core" % "0.11.1",
   "io.circe" %% "circe-generic" % "0.11.1",
   "io.circe" %% "circe-literal" % "0.11.1",
-  "org.webjars.npm" % "swagger-ui-dist" % "3.20.8"
+  "org.xerial" % "sqlite-jdbc" % "3.18.0",
+  "io.getquill" %% "quill-jdbc" % "3.1.0",
+  "org.webjars.npm" % "swagger-ui-dist" % "3.20.8",
 )
 
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)

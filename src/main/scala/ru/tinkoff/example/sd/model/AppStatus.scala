@@ -11,6 +11,6 @@ sealed abstract class AppStatus(val status: String)
 object AppStatus {
   case object New extends AppStatus("new")
   case object InProgress extends AppStatus("in_progress")
-  case object Fixed extends AppStatus("fixed")
-  case class Rejected(cause: String) extends AppStatus("rejected")
+  case object Resolved extends AppStatus("fixed")
+  case object Rejected extends AppStatus("rejected")
 }

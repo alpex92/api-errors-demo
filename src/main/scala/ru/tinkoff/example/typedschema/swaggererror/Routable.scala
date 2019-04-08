@@ -1,23 +1,28 @@
 package ru.tinkoff.example.typedschema.swaggererror
+
 import scala.concurrent.Future
+import scala.language.higherKinds
 
 import akka.http.scaladsl.marshalling.ToEntityMarshaller
 import akka.http.scaladsl.server.Directives.complete
 import akka.http.scaladsl.server.{Directives, Route}
+import cats.~>
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import shapeless.ops.coproduct.{Mapper, Unifier}
 import shapeless.{Coproduct, Poly1}
+
 import ru.tinkoff.tschema.akkaHttp.{Routable => TypedSchemaRoutable}
 
 object Routable extends FailFastCirceSupport {
 
-  implicit def mKErrorRouteable[L <: Coproduct, M <: Coproduct, R](
+  implicit def mKErrorRouteable[F[_], L <: Coproduct, M <: Coproduct, R](
       implicit
       mapper: Mapper.Aux[ErrorMappingPoly.type, L, M],
       unifier: Unifier.Aux[M, Route],
-      successToRoute: R => Route
-  ): TypedSchemaRoutable[Future[Either[L, R]], Either[L, R]] = { res =>
-    Directives.onSuccess(res) {
+      successToRoute: R => Route,
+      fToFuture: F ~> Future
+  ): TypedSchemaRoutable[F[Either[L, R]], Either[L, R]] = { res =>
+    Directives.onSuccess(fToFuture(res)) {
       _.fold(_.fold(ErrorMappingPoly), successToRoute)
     }
   }
