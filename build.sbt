@@ -18,7 +18,11 @@ libraryDependencies ++= Seq(
   "org.xerial" % "sqlite-jdbc" % "3.18.0",
   "io.getquill" %% "quill-jdbc" % "3.1.0",
   "org.webjars.npm" % "swagger-ui-dist" % "3.20.8",
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  "com.typesafe.akka" %% "akka-slf4j" % "2.5.20",
 )
+
+enablePlugins(JavaAppPackaging)
 
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.9")
