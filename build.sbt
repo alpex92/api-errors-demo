@@ -8,7 +8,7 @@ libraryDependencies ++= Seq(
   "org.typelevel" %% "cats-core" % "1.6.0",
   "com.chuusai" %% "shapeless" % "2.3.3",
   "ru.tinkoff" %% "typed-schema" % "0.10.7.1",
-  "ru.tinkoff" %% "derevo-tschema" % "0.5.0",
+  "org.manatki" % "derevo-tschema_2.12" % "0.6.0",
   "com.typesafe.akka" %% "akka-http" % "10.1.7",
   "de.heikoseeberger" %% "akka-http-circe" % "1.25.2",
   "com.lihaoyi" %% "scalatags" % "0.6.7",

@@ -1,12 +1,10 @@
 package ru.tinkoff.example.typedschema
 
 import java.time.{Instant, LocalDate, Year}
-import scala.util.Try
 
 import cats.syntax.option._
 import io.circe.Json
 
-import ru.tinkoff.tschema.FromQueryParam
 import ru.tinkoff.tschema.swagger.SwaggerTypeable.make
 import ru.tinkoff.tschema.swagger.{SwaggerObject, SwaggerPrimitive, SwaggerStringValue, SwaggerTypeable}
 
