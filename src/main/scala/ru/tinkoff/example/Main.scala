@@ -1,6 +1,6 @@
 package ru.tinkoff.example
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContextExecutor, Future}
 import cats.instances.future._
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
@@ -16,7 +16,7 @@ import scala.util.Try
 object Main extends App {
 
   implicit val system = ActorSystem()
-  implicit val mat = ActorMaterializer()
+  implicit val materializer = ActorMaterializer()
   implicit val generalEx = system.dispatcher
   implicit val futureF = FunctionK.id[Future]
 
