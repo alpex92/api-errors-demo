@@ -10,14 +10,14 @@ trait ToApiErrorWithCode[T] {
 }
 
 object ToApiErrorWithCode {
-  implicit def toApiErrorWithCodeFromSwaggerError[T](
+  implicit def toApiErrorWithCode[T](
     implicit se: SwaggerError[T]
   ): ToApiErrorWithCode[T] = new ToApiErrorWithCode[T] {
     override val statusCode: StatusCode = se.statusCode
     override def toApiError(t: T): ApiErrorResponse = ApiErrorResponse(se.description, se.apiErrorCode)
   }
 
-  implicit def toApiErrorWithCodeFromSwaggerErrorAndInstanceT[T](
+  implicit def toApiErrorWithCode[T](
     mkResponse: (SwaggerError[T], T) => ApiErrorResponse
   )(implicit se: SwaggerError[T]): ToApiErrorWithCode[T] = new ToApiErrorWithCode[T] {
     override val statusCode: StatusCode = se.statusCode
