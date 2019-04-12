@@ -11,6 +11,6 @@ package object db {
   implicit val instantEncoding = MappedEncoding[Instant, String](_.toString)
   implicit val instantDecoding = MappedEncoding[String, Instant](txt => Instant.parse(txt))
 
-  implicit val appStatusEncoder = MappedEncoding[AppStatus, String](_.value)
-  implicit val appStatusDecoder = MappedEncoding[String, AppStatus](name => AppStatus.valuesToEntriesMap(name))
+  implicit val appStatusEncoding = MappedEncoding[AppStatus, String](_.value)
+  implicit val appStatusDecoding = MappedEncoding[String, AppStatus](name => AppStatus.valuesToEntriesMap(name))
 }

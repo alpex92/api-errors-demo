@@ -24,7 +24,7 @@ object Errors {
       ApiErrorResponse(s"${se.description}: ${t.issues.toList.mkString(", ")}", se.apiErrorCode)
     }
 
-  implicit val worngStatusError: SwaggerError[WrongStatusError] = SwaggerErrorVal(
+  implicit val wrongStatusError: SwaggerError[WrongStatusError] = SwaggerErrorVal(
     "Неверный статус",
     StatusCodes.BadRequest
   )
