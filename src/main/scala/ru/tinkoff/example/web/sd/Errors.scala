@@ -20,7 +20,7 @@ object Errors {
   )
 
   implicit val appCreateErrorApiErrorWithCode: ToApiErrorWithCode[AppCreateError] =
-    toApiErrorWithCodeFromSwaggerErrorAndInstanceT { (se, t) =>
+    toApiErrorWithCode { (se, t) =>
       ApiErrorResponse(s"${se.description}: ${t.issues.toList.mkString(", ")}", se.apiErrorCode)
     }
 
@@ -30,7 +30,7 @@ object Errors {
   )
 
   implicit val wrongStatusApiErrorWithCode: ToApiErrorWithCode[WrongStatusError] =
-    toApiErrorWithCodeFromSwaggerErrorAndInstanceT { (se, t) =>
+    toApiErrorWithCode { (se, t) =>
       ApiErrorResponse(s"${se.description}: '${t.status}'", se.apiErrorCode)
     }
 
